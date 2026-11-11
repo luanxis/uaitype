@@ -76,7 +76,7 @@ jobs:
         with:
           tag_name: ${{ github.ref_name }}
           files: |
-            dist/uaitype.deb
-            dist/uaitype-*-linux-x86_64.tar.gz
-            dist/sha256sums.txt
+            app/dist/uaitype.deb
+            app/dist/uaitype-*-linux-x86_64.tar.gz
+            app/dist/sha256sums.txt
           generate_release_notes: true
