@@ -1,5 +1,5 @@
-# Deploy do site estático (pré-renderizado por scripts/prerender.mjs) no GitHub Pages.
-# Requer: Settings → Pages → Source = "GitHub Actions".
+# Deploy do site estático (pré-renderizado via hono ssg) no GitHub Pages.
+# enablement: true cria o site Pages automaticamente na primeira execução.
 
 name: Deploy site no GitHub Pages
 
@@ -41,6 +41,8 @@ jobs:
         run: npm run build
 
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
