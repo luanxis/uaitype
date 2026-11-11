@@ -20,7 +20,7 @@ export const Nav = () => (
         <a href="#faq">faq</a>
       </li>
     </ul>
-    <a class="btn btn-primary nav-cta" href="#download">
+    <a class="btn btn-primary nav-cta" href="https://github.com/luanxis/uaitype/releases/latest/download/uaitype.deb">
       ↓ download
     </a>
   </nav>

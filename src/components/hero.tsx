@@ -16,7 +16,7 @@ export const Hero = () => (
         suas notas. Grátis e de código aberto.
       </p>
       <div class="cta-row">
-        <a href="#download" class="btn btn-primary">
+        <a href="https://github.com/luanxis/uaitype/releases/latest/download/uaitype.deb" class="btn btn-primary">
           ↓ baixar grátis
         </a>
         <a href="https://github.com/luanxis/uaitype" target="_blank" rel="noopener" class="btn btn-outline">

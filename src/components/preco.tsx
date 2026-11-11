@@ -19,7 +19,7 @@ export const Preco = () => (
           <br />
           sem pegadinha, sem asteriscos
         </p>
-        <a href="#download" class="btn btn-primary">
+        <a href="https://github.com/luanxis/uaitype/releases/latest/download/uaitype.deb" class="btn btn-primary">
           ↓ baixar grátis
         </a>
       </div>
