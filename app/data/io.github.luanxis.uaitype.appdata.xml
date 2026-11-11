@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.luanxis.uaitype</id>
+  <launchable type="desktop-id">io.github.luanxis.uaitype.desktop</launchable>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <name>uaiType</name>
+  <summary>Editor markdown minimalista para Linux</summary>
+  <developer_name>Luan SB</developer_name>
+  <url type="homepage">https://github.com/luanxis/uaitype</url>
+  <url type="bugtracker">https://github.com/luanxis/uaitype/issues</url>
+  <url type="vcs-browser">https://github.com/luanxis/uaitype</url>
+
+  <description>
+    <p>
+      O uaiType é um editor markdown nativo para Linux, escrito em Rust com
+      GTK4 e libadwaita — sem webview, sem bloat. Abra, edite e salve seus
+      arquivos .md; a visualização renderiza em tempo real o documento como ele
+      vai ficar, com tabelas GFM, code fences, mermaid e listas de tarefas.
+    </p>
+    <p>
+      A sidebar de workspace navega por pastas de markdown (árvore de arquivos
+      e índice plano de todos os .md), ideal para notas, docs e roteiros.
+    </p>
+    <p>
+      É livre e de código aberto: copie, modifique e redistribua como quiser —
+      MIT. Grátis para sempre, sem conta, sem rastreadores.
+    </p>
+  </description>
+
+  <content_rating type="oars-1.1"/>
+  <branding>
+    <color type="primary" scheme_preference="dark">#171512</color>
+  </branding>
+
+  <releases>
+    <release version="0.1.0" date="2026-11-11">
+      <description>
+        <p>Primeira versão de desenvolvimento: abrir/salvar .md, preview ao vivo,
+        workspace de pastas com árvore e índices, mermaid e tabelas GFM.</p>
+      </description>
+    </release>
+  </releases>
+
+  <recommends>
+    <control>touch</control>
+  </recommends>
+</component>

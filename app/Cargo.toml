@@ -1,0 +1,21 @@
+[package]
+name = "uaitype"
+version = "0.1.0"
+edition = "2021"
+description = "Editor markdown nativo para Linux, construído com GTK4 + libadwaita"
+license = "MIT"
+
+[dependencies]
+gtk4 = { version = "0.11", features = ["v4_10"] }
+mermaid-rs-renderer = "0.3"
+resvg = "0.47"
+usvg = "0.47"
+tiny-skia = "0.12"
+libadwaita = { version = "0.9", features = ["v1_5"] }
+sourceview5 = "0.11"
+pulldown-cmark = "0.13"
+anyhow = "1"
+
+[profile.release]
+strip = true
+lto = true

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="34" stroke-linecap="round" stroke-linejoin="round">
+  <!-- página (outline com canto dobrado integrado) -->
+  <path d="M186 136 h142 l52 56 v184 a18 18 0 0 1 -18 18 H186 a18 18 0 0 1 -18 -18 V154 a18 18 0 0 1 18 -18 z"/>
+  <path d="M328 138 v56 h52"/>
+  <!-- linhas de texto -->
+  <path d="M222 236 h96 M222 282 h66"/>
+  <!-- caret -->
+  <rect x="310" y="274" width="34" height="16" rx="4" fill="currentColor" stroke="none"/>
+</svg>

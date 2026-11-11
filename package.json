@@ -1,0 +1,22 @@
+{
+  "name": "uaitype",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "npm run preview",
+    "build": "rm -rf dist && BASE_PATH=/uaitype/ UAITYPE_BUILD=prod npx hono ssg src/app.tsx -o dist && cp -r public/. dist/",
+    "preview": "npm run build && rm -rf .preview && mkdir -p .preview/uaitype && cp -r dist/. .preview/uaitype/ && python3 -m http.server 4173 -d .preview",
+    "deploy": "npm run build",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "hono": "^4.12.0"
+  },
+  "devDependencies": {
+    "@hono/cli": "^1.0.0-rc.9",
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2"
+  }
+}

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Version=1.5
+Name=uaiType
+GenericName=Editor Markdown
+Comment=Editor markdown minimalista para Linux — Rust, GTK4 e libadwaita
+Exec=uaitype %F
+Icon=io.github.luanxis.uaitype
+Terminal=false
+Categories=Utility;TextEditor;
+Keywords=markdown;editor;text;write;gfm;mermaid;
+StartupNotify=true
+StartupWMClass=io.github.luanxis.uaitype
+MimeType=text/markdown;text/x-markdown;

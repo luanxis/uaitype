@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- uaiType — highlight "Papel envelhecido + blurple Discord" (tema claro): papel #FAF8F5 com roxo #4752C4. -->
+<style-scheme id="uaitype-light" _name="uaiType Light (papel)" version="1.0">
+  <author>uaiType</author>
+  <description>Sintaxe editorial em tons quentes sobre papel quente: terracota, bronze e cinzas mornos sobre #FAF8F5.</description>
+
+  <color id="bg" value="#FAF8F5"/>
+  <color id="fg" value="#22201D"/>
+  <color id="fg-dim" value="#6F6A61"/>
+  <color id="fg-faint" value="#B5AFA1"/>
+  <color id="line" value="#F2EFE9"/>
+  <color id="sel-bg" value="#E2E4FF"/>
+  <color id="sel-fg" value="#22201D"/>
+  <color id="bracket" value="#E4E0D6"/>
+  <color id="acc" value="#4752C4"/>
+  <color id="acc-strong" value="#4752C4"/>
+  <color id="sand" value="#6E5A3B"/>
+
+  <!-- superfície -->
+  <style id="text" foreground="fg"/>
+  <style id="background" background="bg"/>
+  <style id="selection" foreground="sel-fg" background="sel-bg"/>
+  <style id="current-line" background="line"/>
+  <style id="line-numbers" foreground="fg-faint"/>
+  <style id="right-margin" background="line"/>
+  <style id="bracket-match" background="bracket" bold="true"/>
+
+  <!-- comentários e pontuação -->
+  <style id="def:comment" foreground="fg-dim" italic="true"/>
+  <style id="def:shebang" foreground="fg-dim" italic="true"/>
+  <style id="comment" foreground="fg-dim" italic="true"/>
+
+  <!-- chave: terracota -->
+  <style id="def:keyword" foreground="acc" bold="true"/>
+  <style id="keyword" foreground="acc" bold="true"/>
+
+  <!-- strings: bronze envelhecido, itálico -->
+  <style id="def:string" foreground="sand" italic="true"/>
+  <style id="string" foreground="sand" italic="true"/>
+
+  <!-- números: texto normal -->
+  <style id="def:number" foreground="fg"/>
+  <style id="number" foreground="fg"/>
+
+  <!-- tipos / nomes -->
+  <style id="def:type" foreground="acc-strong" underline="single" underline-color="fg-dim"/>
+  <style id="type" foreground="acc-strong" underline="single" underline-color="fg-dim"/>
+  <style id="def:identifier" foreground="fg"/>
+  <style id="identifier" foreground="fg"/>
+  <style id="def:name" foreground="fg"/>
+  <style id="name" foreground="fg"/>
+
+  <!-- operadores / preprocessor -->
+  <style id="def:operator" foreground="fg-dim"/>
+  <style id="operator" foreground="fg-dim"/>
+  <style id="def:preprocessor" foreground="fg-dim" italic="true"/>
+  <style id="preprocessor" foreground="fg-dim" italic="true"/>
+
+  <!-- erros e avisos: negrito + sublinhado -->
+  <style id="def:error" foreground="#000000" bold="true" underline="error"/>
+  <style id="error" foreground="#000000" bold="true" underline="error"/>
+  <style id="def:constant" foreground="fg"/>
+  <style id="constant" foreground="fg"/>
+  <style id="def:special" foreground="fg-dim"/>
+  <style id="special" foreground="fg-dim"/>
+
+  <!-- links/markup -->
+  <style id="def:link" foreground="acc" underline="single"/>
+  <style id="link" foreground="acc" underline="single"/>
+  <style id="underline" underline="single"/>
+</style-scheme>
