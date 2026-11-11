@@ -7,6 +7,8 @@ Este repositório contém:
 - **Landing page** — site estático pré-renderizado com `hono ssg` (Hono + JSX SSR gerado em build time, pasta `src/`), deployado no **GitHub Pages** pela GitHub Action `deploy.yml`
 - **App nativo Linux** — `app/`: editor markdown nativo com **GTK4 + libadwaita** em Rust (Fase 1: abrir/salvar `.md`, sidebar de workspace, índice de `.md`s, mermaid e tabelas GFM no preview)
 
+![uaiType](app/docs/screenshot.png)
+
 ## Rodando o site (dev)
 
 ```sh

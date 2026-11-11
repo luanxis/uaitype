@@ -28,6 +28,17 @@
     </p>
   </description>
 
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/luanxis/uaitype/main/app/docs/screenshot.png</image>
+      <caption>Preview GFM na mesma janela — Ctrl+1 fonte, Ctrl+2 render</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/luanxis/uaitype/main/app/docs/screenshot-source.png</image>
+      <caption>Fonte markdown com syntax highlight e sidebar de workspace</caption>
+    </screenshot>
+  </screenshots>
+
   <content_rating type="oars-1.1"/>
   <branding>
     <color type="primary" scheme_preference="dark">#171512</color>
