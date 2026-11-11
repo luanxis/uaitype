@@ -46,19 +46,19 @@ export const Hero = () => (
         <div class="win-body editor-body">
           <h2 class="md-h1">Bem-vindo ao uaiType</h2>
           <p class="md-p">
-            Este texto foi <strong class="md-strong">renderizado enquanto você digita</strong> — sem
-            preview separado, sem trocar de modo.
+            <strong class="md-strong">Mesma janela</strong> para fonte e render — <code class="md-inline">Ctrl+1</code> edita,{' '}
+            <code class="md-inline">Ctrl+2</code> visualiza.
           </p>
           <ul class="md-tasks">
             <li class="done">
-              <span class="box">✓</span> Escrever no fluxo, não na sintaxe
+              <span class="box">✓</span> Tabelas GFM e task lists renderizadas
             </li>
             <li class="done">
-              <span class="box">✓</span> Tabelas, listas e{' '}
-              <code class="md-inline">code fences</code> na hora
+              <span class="box">✓</span>{' '}
+              <code class="md-inline">code fences</code> com syntax highlight
             </li>
-            <li>
-              <span class="box empty"></span> Exportar o rascunho como PDF
+            <li class="done">
+              <span class="box">✓</span> Mermaid como SVG na visualização
             </li>
           </ul>
           <pre class="md-code"><span class="tok-kw">const</span> ideias = <span class="tok-str">'solta agora'</span><span class="caret"></span></pre>

@@ -32,7 +32,7 @@ export const FAQS: Array<{ question: string; answer: string }> = [
   {
     question: 'O que é o uaiType?',
     answer:
-      'Um editor markdown minimalista com live preview — e que agora também é um app nativo para Linux, escrito em Rust com GTK4 e libadwaita, sem webview. A experiência completa de WYSIWYG é a Fase 2 do roadmap.',
+      'Um editor markdown nativo para Linux, escrito em Rust com GTK4 e libadwaita — sem webview. Fonte com highlight, preview GFM com tabelas e mermaid na mesma janela, e workspace de pastas para organizar as notas. A experiência WYSIWYG completa é a Fase 2.',
   },
   {
     question: 'É mesmo grátis?',
@@ -42,12 +42,12 @@ export const FAQS: Array<{ question: string; answer: string }> = [
   {
     question: 'Quais plataformas são suportadas?',
     answer:
-      'Hoje o foco é Linux, com o app nativo (GTK4 + libadwaita) pronto para compilar do código-fonte. Windows e macOS estão no horizonte, assim que o app amadurecer.',
+      'Linux, como app nativo. Para Debian/Ubuntu, o .deb na seção Download instala com um clique; nas demais distros, o tarball acompanha um install.sh. Windows e macOS estão no horizonte, assim que o app amadurecer.',
   },
   {
     question: 'Como eu rodo o app agora?',
     answer:
-      'Clone o repositório, instale os pacotes GTK4 (veja a tabela por distro na seção de download) e rode `cd app && cargo run`. As instruções completas estão no app/README.md do repositório — o processo leva poucos minutos.',
+      'Baixe o .deb (ou o tarball) na seção Download — não precisa compilar. Se preferir rodar do código: `sudo apt install libgtk-4-dev libadwaita-1-dev libgtksourceview-5-dev cargo && git clone https://github.com/luanxis/uaitype.git && cd uaitype/app && cargo run`.',
   },
   {
     question: 'Posso contribuir com o projeto?',
@@ -57,6 +57,6 @@ export const FAQS: Array<{ question: string; answer: string }> = [
   {
     question: 'O uaiType está pronto?',
     answer:
-      'Ainda não — o projeto está em desenvolvimento ativo. O app Linux já existe como código-fonte; os downloads prontos para uso serão publicados aqui quando as primeiras builds saírem do forno.',
+      'A versão 0.1.0 está publicada — download na seção Download. O projeto está em desenvolvimento ativo: há arestas e a Fase 2 (WYSIWYG inline) não saiu ainda. Issues e PRs são sempre bem-vindos.',
   },
 ]

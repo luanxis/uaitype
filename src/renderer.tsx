@@ -20,6 +20,12 @@ export const renderer = jsxRenderer(({ children }) => (
       <meta charset="UTF-8" />
       <meta http-equiv="Content-Security-Policy" content={CSP} />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta property="og:title" content="uaiType — um editor markdown minimalista" />
+      <meta property="og:description" content="Editor markdown nativo para Linux — Rust, GTK4 + libadwaita · MIT" />
+      <meta property="og:url" content="https://luanxis.github.io/uaitype/" />
+      <meta property="og:image" content="https://raw.githubusercontent.com/luanxis/uaitype/main/app/res/icons/hicolor/512x512/apps/io.github.luanxis.uaitype.png" />
+      <meta property="og:image:type" content="image/png" />
+      <meta name="twitter:card" content="summary" />
       <script src={`${base}static/theme-init.js`}></script>
       <link rel="icon" type="image/svg+xml" href={`${base}static/uaitype.svg`} />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
