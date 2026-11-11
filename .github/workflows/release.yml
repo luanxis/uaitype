@@ -1,0 +1,75 @@
+# Release do app nativo do uaiType.
+# Dispara em toda tag v*: compila, empacota (.deb + tarball + checksums) e
+# publica o GitHub Release automaticamente via gh (com as notas geradas).
+
+name: Release do app
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: app
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instala dependências de sistema
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libgtk-4-dev libadwaita-1-dev libgtksourceview-5-dev \
+            build-essential pkg-config curl gh
+
+      - name: Empacota .deb (release profile)
+        run: cargo deb --locked --output dist/uaitype.deb
+
+      - name: Cria tarball
+        run: |
+          PKG="uaitype-linux-x86_64"
+          mkdir -p "dist/$PKG/bin" \
+                   "dist/$PKG/share/applications" \
+                   "dist/$PKG/share/metainfo" \
+                   "dist/$PKG/share/icons/hicolor/scalable/apps" \
+                   "dist/$PKG/share/icons/hicolor/symbolic/apps"
+          cp target/release/uaitype "dist/$PKG/bin/uaitype"
+          cp install.sh "dist/$PKG/install.sh"
+          chmod +x "dist/$PKG/install.sh"
+          cp ../LICENSE ../README.md "dist/$PKG/"
+          cp data/io.github.luanxis.uaitype.desktop "dist/$PKG/share/applications/"
+          cp data/io.github.luanxis.uaitype.appdata.xml "dist/$PKG/share/metainfo/"
+          cp res/icons/io.github.luanxis.uaitype.svg \
+            "dist/$PKG/share/icons/hicolor/scalable/apps/"
+          cp res/icons/io.github.luanxis.uaitype-symbolic.svg \
+            "dist/$PKG/share/icons/hicolor/symbolic/apps/"
+          for s in 16 32 48 64 128 256 512; do
+            mkdir -p "dist/$PKG/share/icons/hicolor/${s}x${s}/apps"
+            cp "res/icons/hicolor/${s}x${s}/apps/io.github.luanxis.uaitype.png" \
+              "dist/$PKG/share/icons/hicolor/${s}x${s}/apps/"
+          done
+          tar -C dist -czf "dist/$PKG.tar.gz" "$PKG"
+          rm -rf "dist/$PKG"
+
+      - name: Checksums
+        run: |
+          cd dist
+          sha256sum *.deb *.tar.gz > sha256sums.txt
+          cat sha256sums.txt
+
+      - name: Publica a Release do GitHub
+        working-directory: app
+        run: gh release create "${GITHUB_REF_NAME}" --generate-notes dist/uaitype.deb dist/uaitype-*-linux-x86_64.tar.gz dist/sha256sums.txt
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

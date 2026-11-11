@@ -19,3 +19,29 @@ anyhow = "1"
 [profile.release]
 strip = true
 lto = true
+
+[package.metadata.deb]
+maintainer = "luanxis <217118225+luanxis@users.noreply.github.com>"
+copyright = "2026, Luan SB"
+license-file = ["../LICENSE", "4"]
+depends = "$auto"
+section = "editors"
+priority = "optional"
+extended-description = """\
+Editor markdown nativo para Linux — Rust com GTK4 + libadwaita, sem webview.
+Fonte com syntax highlight e preview renderizada na mesma janela; workspace
+de pastas com árvore e índice de todos os .md; tabelas GFM e mermaid no preview."""
+assets = [
+    ["target/release/uaitype", "usr/bin/", "755"],
+    ["data/io.github.luanxis.uaitype.desktop", "usr/share/applications/", "644"],
+    ["data/io.github.luanxis.uaitype.appdata.xml", "usr/share/metainfo/", "644"],
+    ["res/icons/io.github.luanxis.uaitype.svg", "usr/share/icons/hicolor/scalable/apps/", "644"],
+    ["res/icons/io.github.luanxis.uaitype-symbolic.svg", "usr/share/icons/hicolor/symbolic/apps/", "644"],
+    ["res/icons/hicolor/16x16/apps/io.github.luanxis.uaitype.png", "usr/share/icons/hicolor/16x16/apps/", "644"],
+    ["res/icons/hicolor/32x32/apps/io.github.luanxis.uaitype.png", "usr/share/icons/hicolor/32x32/apps/", "644"],
+    ["res/icons/hicolor/48x48/apps/io.github.luanxis.uaitype.png", "usr/share/icons/hicolor/48x48/apps/", "644"],
+    ["res/icons/hicolor/64x64/apps/io.github.luanxis.uaitype.png", "usr/share/icons/hicolor/64x64/apps/", "644"],
+    ["res/icons/hicolor/128x128/apps/io.github.luanxis.uaitype.png", "usr/share/icons/hicolor/128x128/apps/", "644"],
+    ["res/icons/hicolor/256x256/apps/io.github.luanxis.uaitype.png", "usr/share/icons/hicolor/256x256/apps/", "644"],
+    ["res/icons/hicolor/512x512/apps/io.github.luanxis.uaitype.png", "usr/share/icons/hicolor/512x512/apps/", "644"],
+]

@@ -3,7 +3,7 @@ export const DownloadSection = () => (
     <p class="sec-label">download</p>
     <h2>Rode no seu Linux</h2>
     <div class="dl-grid">
-      <a class="dl-btn" href="https://github.com/luanxis/uaitype" target="_blank" rel="noopener" aria-label="Ver o código do uaiType no GitHub">
+      <a class="dl-btn" href="https://github.com/luanxis/uaitype/releases/latest" target="_blank" rel="noopener" aria-label="Baixar o uaiType para Linux via GitHub Releases">
         <span class="dl-ico">
           <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polyline points="4 17 10 11 4 5" />
@@ -11,8 +11,8 @@ export const DownloadSection = () => (
           </svg>
         </span>
         <span class="dl-platform">Linux (nativo)</span>
-        <span class="dl-detail">App GTK4 + Rust — clone e compile com o cargo</span>
-        <span class="dl-cta">ver código →</span>
+        <span class="dl-detail">.deb e tarball na aba Releases — versão 0.1.0, GTK4 + Rust</span>
+        <span class="dl-cta">baixar ↓</span>
       </a>
       <div class="dl-btn dl-soon" aria-disabled="true">
         <span class="dl-ico">
@@ -40,21 +40,27 @@ export const DownloadSection = () => (
 
     <div class="build-box">
       <p class="build-title">
-        <span aria-hidden="true">$</span> como rodar na sua máquina
+        <span aria-hidden="true">$</span> instalado em 30 segundos
       </p>
-      <pre class="build-code">{`# Debian / Ubuntu
+      <pre class="build-code">{`# Debian / Ubuntu — resolve as dependências sozinho
+wget https://github.com/luanxis/uaitype/releases/latest/download/uaitype.deb
+sudo apt install ./uaitype.deb
+
+# qualquer Linux (Arch, Fedora, openSUSE): tarball + script
+wget https://github.com/luanxis/uaitype/releases/latest/download/uaitype-linux-x86_64.tar.gz
+tar xzf uaitype-linux-x86_64.tar.gz
+cd uaitype-linux-x86_64 && ./install.sh   # instala em ~/.local (use sudo p/ /usr/local)
+
+# compilar do código-fonte
 sudo apt install libgtk-4-dev libadwaita-1-dev libgtksourceview-5-dev cargo
-
-# Fedora
-sudo dnf install gtk4-devel libadwaita-devel gtksourceview5-devel cargo
-
-# clone e rode
 git clone https://github.com/luanxis/uaitype.git
 cd uaitype/app && cargo run`}</pre>
       <p class="dl-note">
-        <span aria-hidden="true">&gt;</span> app em desenvolvimento ativo — sem binários publicados
-        por enquanto; o jeito oficial é compilar do código-fonte (veja{' '}
-        <code class="md-inline">app/README.md</code> no repositório). Arch? veja a tabela no README.
+        <span aria-hidden="true">&gt;</span> app em desenvolvimento ativo — a versão 0.1.0 está publicada em
+        <a href="https://github.com/luanxis/uaitype/releases/latest" target="_blank" rel="noopener">Releases</a>.
+        Melhor do que usar: contribuir de volta — veja o código no
+        <a href="https://github.com/luanxis/uaitype" target="_blank" rel="noopener">
+          <code class="md-inline">github.com/luanxis/uaitype</code></a>.
       </p>
     </div>
   </section>
