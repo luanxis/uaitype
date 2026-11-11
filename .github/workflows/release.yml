@@ -24,7 +24,7 @@ jobs:
         working-directory: app
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Instala dependências de sistema
         run: |
@@ -32,6 +32,9 @@ jobs:
           sudo apt-get install -y \
             libgtk-4-dev libadwaita-1-dev libgtksourceview-5-dev \
             build-essential pkg-config curl gh
+
+      - name: Instala cargo-deb
+        run: cargo install cargo-deb --locked
 
       - name: Empacota .deb (release profile)
         run: cargo deb --locked --output dist/uaitype.deb
