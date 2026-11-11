@@ -1,6 +1,6 @@
 # Release do app nativo do uaiType.
 # Dispara em toda tag v*: compila, empacota (.deb + tarball + checksums) e
-# publica o GitHub Release automaticamente via gh (com as notas geradas).
+# publica o GitHub Release automaticamente (softprops/action-gh-release).
 
 name: Release do app
 
@@ -31,7 +31,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             libgtk-4-dev libadwaita-1-dev libgtksourceview-5-dev \
-            build-essential pkg-config curl gh
+            build-essential pkg-config curl
 
       - name: Instala cargo-deb
         run: cargo install cargo-deb --locked
@@ -72,7 +72,11 @@ jobs:
           cat sha256sums.txt
 
       - name: Publica a Release do GitHub
-        working-directory: app
-        run: gh release create "${GITHUB_REF_NAME}" --generate-notes dist/uaitype.deb dist/uaitype-*-linux-x86_64.tar.gz dist/sha256sums.txt
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: |
+            dist/uaitype.deb
+            dist/uaitype-*-linux-x86_64.tar.gz
+            dist/sha256sums.txt
+          generate_release_notes: true
