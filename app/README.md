@@ -72,7 +72,7 @@ cargo build --release
 cargo deb                       # target/debian/uaitype_0.1.0-1_amd64.deb
 ```
 
-Isso empacota o binário, o `.desktop`, o `appdata.xml` e os ícones, resolvendo as dependências de sistema automaticamente.
+Isso empacota o binário, o `.desktop`, o `metainfo.xml` e os ícones, resolvendo as dependências de sistema automaticamente.
 
 ## Sistema de ícones
 
@@ -88,7 +88,7 @@ app/
 ├── install.sh                              # instala o tarball (~/.local ou /usr/local com sudo)
 ├── data/
 │   ├── io.github.luanxis.uaitype.desktop
-│   └── io.github.luanxis.uaitype.appdata.xml
+│   └── io.github.luanxis.uaitype.metainfo.xml
 ├── res/
 │   ├── icons/
 │   │   ├── io.github.luanxis.uaitype.svg                 # master (squircle)

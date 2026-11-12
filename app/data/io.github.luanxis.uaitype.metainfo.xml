@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.luanxis.uaitype</id>
+  <launchable type="desktop-id">io.github.luanxis.uaitype.desktop</launchable>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <name>uaiType</name>
+  <summary>A minimal markdown editor</summary>
+  <developer id="io.github.luanxis">
+    <name>Luan SB</name>
+  </developer>
+  <url type="homepage">https://github.com/luanxis/uaitype</url>
+  <url type="bugtracker">https://github.com/luanxis/uaitype/issues</url>
+  <url type="vcs-browser">https://github.com/luanxis/uaitype</url>
+
+  <description>
+    <p>
+      uaiType is a native markdown editor for Linux, written in Rust with
+      GTK4 and libadwaita — no webview, no bloat. Open, edit, and save your
+      .md files; the built-in GFM preview renders the document with tables,
+      task lists, code fences with syntax highlighting, and mermaid diagrams.
+    </p>
+    <p>
+      The workspace sidebar lets you browse a folder of markdown notes as a
+      tree (any depth) plus a flat index of all .md files inside it — ideal
+      for notes, docs, and scripts.
+    </p>
+    <p>
+      It is free and open source under the MIT license. No account, no
+      telemetry, no tracking.
+    </p>
+  </description>
+
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/luanxis/uaitype/v0.1.0/app/docs/screenshot.png</image>
+      <caption>GFM preview — same window, source (Ctrl+1) and render (Ctrl+2)</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/luanxis/uaitype/v0.1.0/app/docs/screenshot-source.png</image>
+      <caption>Markdown source with syntax highlighting and workspace sidebar</caption>
+    </screenshot>
+  </screenshots>
+
+  <content_rating type="oars-1.1"/>
+  <branding>
+    <color type="primary" scheme_preference="dark">#171512</color>
+  </branding>
+
+  <requires>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <display_length compare="ge">768</display_length>
+  </requires>
+
+  <releases>
+    <release version="0.1.0" date="2026-11-11">
+      <url type="details">https://github.com/luanxis/uaitype/releases/tag/v0.1.0</url>
+      <description>
+        <p>
+          First development release. Open/save .md files, live GFM preview
+          with tables and mermaid diagrams, workspace sidebar with a flat
+          index of all markdown files, Ctrl+B to collapse the sidebar,
+          English and Brazilian Portuguese UI.
+        </p>
+      </description>
+    </release>
+  </releases>
+</component>

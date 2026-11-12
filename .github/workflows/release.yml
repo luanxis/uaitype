@@ -52,7 +52,7 @@ jobs:
           chmod +x "dist/$PKG/install.sh"
           cp ../LICENSE ../README.md "dist/$PKG/"
           cp data/io.github.luanxis.uaitype.desktop "dist/$PKG/share/applications/"
-          cp data/io.github.luanxis.uaitype.appdata.xml "dist/$PKG/share/metainfo/"
+          cp data/io.github.luanxis.uaitype.metainfo.xml "dist/$PKG/share/metainfo/"
           cp res/icons/io.github.luanxis.uaitype.svg \
             "dist/$PKG/share/icons/hicolor/scalable/apps/"
           cp res/icons/io.github.luanxis.uaitype-symbolic.svg \

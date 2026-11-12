@@ -31,8 +31,8 @@ install -Dm644 "$HERE/share/icons/hicolor/symbolic/apps/io.github.luanxis.uaityp
   "$PREFIX/share/icons/hicolor/symbolic/apps/io.github.luanxis.uaitype-symbolic.svg"
 install -Dm644 "$HERE/share/applications/io.github.luanxis.uaitype.desktop" \
   "$PREFIX/share/applications/io.github.luanxis.uaitype.desktop"
-install -Dm644 "$HERE/share/metainfo/io.github.luanxis.uaitype.appdata.xml" \
-  "$PREFIX/share/metainfo/io.github.luanxis.uaitype.appdata.xml"
+install -Dm644 "$HERE/share/metainfo/io.github.luanxis.uaitype.metainfo.xml" \
+  "$PREFIX/share/metainfo/io.github.luanxis.uaitype.metainfo.xml"
 
 if command -v update-desktop-database >/dev/null 2>&1; then
   update-desktop-database "$PREFIX/share/applications" || true
