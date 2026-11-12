@@ -1,41 +1,41 @@
 # uaiType
 
-Um editor markdown **minimalista**, grátis e de código aberto.
+A free, open source **native markdown editor** for Linux.
+[🇧🇷 Português](README.pt-BR.md)
 
-Este repositório contém:
+This repository contains:
 
-- **Landing page** — site estático pré-renderizado com `hono ssg` (Hono + JSX SSR gerado em build time, pasta `src/`), deployado no **GitHub Pages** pela GitHub Action `deploy.yml`
-- **App nativo Linux** — `app/`: editor markdown nativo com **GTK4 + libadwaita** em Rust (Fase 1: abrir/salvar `.md`, sidebar de workspace, índice de `.md`s, mermaid e tabelas GFM no preview)
+- **Landing page** — static site pre-rendered with `hono ssg` (Hono + JSX SSR at build time, folder `src/`), deployed to **GitHub Pages** by the `deploy.yml` GitHub Action
+- **Native Linux app** — `app/`: a native markdown editor built with **GTK4 + libadwaita** in Rust (Phase 1: open/save `.md`, workspace sidebar, flat index of `.md` files, mermaid and GFM tables in preview)
 
 ![uaiType](app/docs/screenshot.png)
 
-## Rodando o site (dev)
+## Run the site (dev)
 
 ```sh
 npm install
-npm run preview      # build + preview em http://localhost:4173/uaitype/
+npm run preview      # build + preview at http://localhost:4173/uaitype/
 ```
 
-Para iterar: edite `src/` e rode `npm run preview` de novo (o site é estático —
-sem servidor em produção). Para checar uma resposta específica, use `hono request /`.
+Iterate on `src/` and re-run `npm run preview` (the site is static — no server in production). To check a specific response, use `hono request /`.
 
-## Build estático e preview
+## Static build and preview
 
 ```sh
-npm run build        # pré-renderiza o site em dist/ (hono ssg)
-npm run preview      # build + preview em http://localhost:4173/uaitype/
+npm run build        # pre-renders the site into dist/ (hono ssg)
+npm run preview      # build + preview at http://localhost:4173/uaitype/
 ```
 
-O build de produção usa `hono ssg` (pré-render oficial do Hono). Em produção o site é servido no **GitHub Pages** em `https://<owner>.github.io/uaitype/` — a base dos caminhos de assets (`base_path`/`BASE_PATH`, ver `src/base.ts`) é `/uaitype/`; no dev local usa `/`. O workflow `.github/workflows/deploy.yml` constrói e faz o deploy a cada push na `main` (requer `Settings → Pages → Source: GitHub Actions` no repo).
+Production uses `hono ssg` (Hono's official pre-render). The site is served at **GitHub Pages** at `https://<owner>.github.io/uaitype/` — the asset base path (`base_path`/`BASE_PATH`, see `src/base.ts`) is `/uaitype/`; local dev uses `/`. The workflow `.github/workflows/deploy.yml` builds and deploys on every push to `main` (requires `Settings → Pages → Source: GitHub Actions` on the repo).
 
-## Rodando o app nativo
+## Building the native app
 
-Veja [`app/README.md`](app/README.md) — precisa dos pacotes de desenvolvimento do GTK4/libadwaita/SourceView5, depois `cargo run`.
+See [`app/README.md`](app/README.md) — you need the development packages for GTK4/libadwaita/SourceView5, then `cargo run`.
 
-## Licença
+## License
 
-**MIT** — veja [`LICENSE`](LICENSE).
+**MIT** — see [`LICENSE`](LICENSE).
 
-Em resumo: você pode usar, copiar, modificar, mesclar, publicar, distribuir, sublicenciar e/ou vender o uaiType, inclusive comercialmente; só precisa manter o aviso de copyright e esta licença. Sem copyleft, sem CLA, sem asteriscos.
+You may use, copy, modify, merge, publish, distribute, sublicense and/or sell copies of uaiType, including commercially; you must keep the copyright notice and this license. No copyleft, no CLA, no asterisks.
 
-O **nome** "uaiType" identifica o produto oficial; forks são permitidos, mas devem usar outro nome.
+The **name** uaiType identifies the official product; forks are allowed but must use a different name.

@@ -1,37 +1,37 @@
-# uaiType — app desktop (Linux)
+# uaiType — desktop app (Linux)
 
-Editor markdown **nativo** para Linux, feito em Rust com **GTK4 + libadwaita**.
-Fase 1 do projeto: abrir/salvar `.md`, sidebar de workspace, preview renderizada
-ao vivo na mesma janela (pulldown-cmark).
+Native **markdown editor** for Linux, written in Rust with **GTK4 + libadwaita**.
+Project phase 1: open/save `.md`, workspace sidebar, live GFM preview in the same window (pulldown-cmark).
+[🇧🇷 Português](README.pt-BR.md)
 
-## Funcionalidades (Fase 1)
+## Features (Phase 1)
 
-- Abrir `.md` com `Ctrl+O`, `Ctrl+N` novo documento, `Ctrl+Q` sair
-- Salvar com `Ctrl+S`, "salvar como" com `Ctrl+Shift+S`
-- Editor com números de linha e syntax highlight markdown (esquemas monocromáticos/papel + blurple em `res/schemes/`)
-- **Preview renderizada** na mesma janela (Ctrl+1 = fonte, Ctrl+2 = render): GFM — tabelas, task lists, strikethrough —, code fences com destaque, bloco de citação, mermaid
-- **Workspace de pastas**: `Ctrl+Shift+O` escolhe a pasta; sidebar com **Arquivos** (árvore de pastas e `.md`) e **Índices** (lista plana de todos os `.md` da pasta)
-- `Ctrl+B` ou botão na toolbar colapsa a sidebar; ela recolhe sozinha em janelas `< 700px` (breakpoints adw); toolbar se adapta abaixo de `460px`
-- `+` no rodapé da sidebar cria `untitled[-N].md` dentro do workspace e o abre
-- Indicador de "não salvo" (`●`) no título da janela com título vivo (`nome — uaiType`)
-- Toasts para salvar/abrir/criar (`AdwToastOverlay`) e barra de status com contagem de palavras/caracteres
-- Diálogos `AdwAboutDialog` (ícone folha em edição, MIT) e confirmação de descarte para fechar com alterações não salvas
-- **Aparência** no menu ☰ → Sistema / Claro / Escuro (forçável em tempo real); editor abre no tema do sistema e alterna ao vivo
-- Ícones em `res/icons/` (hicolor 16–512px + `-symbolic`) — launcher mostra o app pelo nome `io.github.luanxis.uaitype`
-- Tema claro/escuro seguindo o sistema (libadwaita); esquema quente com blurple `#5865F2`
+- Open `.md` with `Ctrl+O`, `Ctrl+N` new document, `Ctrl+Q` quit
+- Save with `Ctrl+S`, "Save as" with `Ctrl+Shift+S`
+- Editor with line numbers and markdown syntax highlighting (monochrome/editorial schemes + blurple in `res/schemes/`)
+- **Preview in the same window** (Ctrl+1 = source, Ctrl+2 = render): GFM — tables, task lists, strikethrough —, highlighted code fences, blockquotes, mermaid diagrams
+- **Workspace folders**: `Ctrl+Shift+O` picks the folder; sidebar with **Files** (folder tree of `.md` files) and **Indices** (flat list of every `.md` in the folder)
+- `Ctrl+B` or the toolbar button collapses the sidebar; it collapses automatically on windows `< 700px` (Adw breakpoints); toolbar adapts below `460px`
+- The `+` in the sidebar footer creates `untitled[-N].md` inside the workspace and opens it
+- Unsaved indicator (`●`) in the window title with live title (`name — uaiType`)
+- Toasts for save/open/create (`AdwToastOverlay`) and a status bar with word/char counts
+- `AdwAboutDialog` (folha-em-edição icon, MIT) and discard confirmation when closing with unsaved changes
+- **Appearance** in the ☰ menu → System / Light / Dark (live switchable); editor follows the system theme
+- Icons in `res/icons/` (hicolor 16–512px + `-symbolic`) — the launcher shows the app as `io.github.luanxis.uaitype`
+- Light/dark theme follows the system (libadwaita); warm scheme with blurple `#5865F2`
 
-## Instalação (o mais fácil)
+## Install (easiest)
 
-Baixe o último `.deb` ou o tarball da página de releases:
+Download the latest `.deb` or the tarball from the Releases page:
 
-**Debian/Ubuntu (.deb)** — resolve as dependências automaticamente:
+**Debian/Ubuntu (.deb)** — resolves dependencies automatically:
 
 ```sh
 wget https://github.com/luanxis/uaitype/releases/latest/download/uaitype.deb
 sudo apt install ./uaitype.deb
 ```
 
-**Qualquer distro Linux (tarball + script)** — instala em `~/.local` sem sudo:
+**Any Linux distro (tarball + script)** — installs to `~/.local` without sudo:
 
 ```sh
 wget https://github.com/luanxis/uaitype/releases/latest/download/uaitype-linux-x86_64.tar.gz
@@ -39,53 +39,53 @@ tar xzf uaitype-linux-x86_64.tar.gz
 cd uaitype-linux-x86_64 && ./install.sh
 ```
 
-**Com sudo (sistema todo):** `sudo ./install.sh` (prefixo `/usr/local`)
-**Opções:** `PREFIX=/opt ./install.sh` (prefixo customizado)
+**System-wide (with sudo):** `sudo ./install.sh` (prefix `/usr/local`)
+**Options:** `PREFIX=/opt ./install.sh` (custom prefix)
 
-## Ou compile do código-fonte
+## Or build from source
 
-### Pré-requisitos
+### Prerequisites
 
-| Distro | Comando |
+| Distro | Command |
 | --- | --- |
 | Fedora | `sudo dnf install gtk4-devel libadwaita-devel gtksourceview5-devel cargo` |
 | Debian / Ubuntu | `sudo apt install libgtk-4-dev libadwaita-1-dev libgtksourceview-5-dev cargo` |
 | Arch | `sudo pacman -S gtk4 libadwaita gtksourceview5 rustup` |
 
-## Rodar
+## Run
 
 ```sh
 cd app
 cargo run
 ```
 
-Build otimizado:
+Optimized build:
 
 ```sh
 cargo build --release
 ./target/release/uaitype
 ```
 
-## Gerar o pacote você mesmo
+## Build the package yourself
 
 ```sh
 cargo deb                       # target/debian/uaitype_0.1.0-1_amd64.deb
 ```
 
-Isso empacota o binário, o `.desktop`, o `metainfo.xml` e os ícones, resolvendo as dependências de sistema automaticamente.
+This packages the binary, the `.desktop`, the metainfo and the icons, resolving system dependencies automatically.
 
-## Sistema de ícones
+## Icon system
 
-**Um único desenho**, escalável de 16px ao Flathub: "Folha em edição" — página creme com canto dobrado, linhas de texto e caret blurple `#5865F2` (inline na última linha) sobre squircle envelhecido `#171512`.
+**A single design**, scalable from 16px to Flathub: "Folha em edição" — cream page with a folded corner, text lines and a blurple `#5865F2` caret (inline at the end of the last line) on a warm `#171512` squircle.
 
-O variant `-symbolic` (monocromático, `currentColor`) é o usado por menus e toolbar em apps GTK4.
+The `-symbolic` variant (monochrome, `currentColor`) is used by GTK4 menus and toolbars.
 
-## Estrutura
+## Structure
 
 ```
 app/
-├── Cargo.toml                              # gtk4, libadwaita, sourceview5, pulldown-cmark (+ metadata .deb)
-├── install.sh                              # instala o tarball (~/.local ou /usr/local com sudo)
+├── Cargo.toml                              # gtk4, libadwaita, sourceview5, pulldown-cmark (+ .deb metadata)
+├── install.sh                              # installs the tarball (~/.local, or /usr/local with sudo)
 ├── data/
 │   ├── io.github.luanxis.uaitype.desktop
 │   └── io.github.luanxis.uaitype.metainfo.xml
@@ -96,17 +96,17 @@ app/
 │   │   └── hicolor/<n>x<n>/apps/io.github.luanxis.uaitype.png
 │   └── schemes/uaitype-dark.xml / uaitype-light.xml
 └── src/
-    └── main.rs                              # janela, editor, preview, sidebar e ações
+    └── main.rs                              # window, editor, preview, sidebar, actions
 ```
 
-## Limitações conhecidas
+## Known limitations
 
-- **Requer WebKitGTK? Não.** É GTK nativo — os pacotes `*-devel` são necessários só para **compilar**; o app usa as libs do sistema em runtime.
-- O preview cobre GFM: headings, bold/itálico, code inline/blocos, listas, links, tabelas, task lists e mermaid. Imagens externas e footnotes ficam para a Fase 2.
-- Arquivos binários/imensos não são tratados; `.md` local apenas.
-- Fase 2 planejada: decorações inline no editor (marcadores de bold/heading escondidos fora da linha atual).
-- Sem dependência de `pprint`/bwrap; funciona em qualquer GTK4/libadwaita ≥ 1.5.
+- **No WebKitGTK needed.** It's native GTK — `*-devel` packages are required only to **build**; the app uses system libraries at runtime.
+- The preview covers GFM: headings, bold/italic, inline/blocked code, lists, links, tables, task lists and mermaid. External images and footnotes land in Phase 2.
+- Large binary files aren't handled; local `.md` only.
+- Phase 2 planned: inline editor decorations (bold/heading markers hidden outside the current line).
+- Works on any GTK4/libadwaita ≥ 1.5.
 
-## Licença
+## License
 
-MIT — veja [`../LICENSE`](../LICENSE).
+MIT — see [`../LICENSE`](../LICENSE).
