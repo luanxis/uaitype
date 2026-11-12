@@ -16,6 +16,30 @@ use sourceview5::prelude::{BufferExt, ViewExt};
 use std::cell::{Cell, RefCell};
 use std::path::PathBuf;
 use std::rc::Rc;
+use std::sync::OnceLock;
+
+// ===== i18n (inglês é o padrão; pt-BR quando o sistema estiver em português) =====
+fn lang_is_pt() -> bool {
+    static PT: OnceLock<bool> = OnceLock::new();
+    *PT.get_or_init(|| {
+        for var in ["LC_ALL", "LANG", "LANGUAGE"] {
+            if let Ok(v) = std::env::var(var) {
+                if v.to_lowercase().starts_with("pt") {
+                    return true;
+                }
+            }
+        }
+        false
+    })
+}
+
+fn tr(pt: &'static str, en: &'static str) -> &'static str {
+    if lang_is_pt() {
+        pt
+    } else {
+        en
+    }
+}
 
 struct AppState {
     current_path: RefCell<Option<PathBuf>>,
@@ -23,10 +47,9 @@ struct AppState {
     workspace: RefCell<Option<PathBuf>>,
 }
 
-const WELCOME: &str = "# Bem-vindo ao uaiType\n\nUm editor markdown **nativo** para Linux, escrito em Rust com GTK4 e libadwaita.\n\n## O que funciona\n\n- **Abrir** arquivos `.md` com `Ctrl+O`\n- **Salvar** com `Ctrl+S` e **Salvar como** com `Ctrl+Shift+S`\n- Pré-visual atualizada ao digitar\n- Tema claro/escuro seguindo o seu sistema
-- `Ctrl+1` = editar (fonte) · `Ctrl+2` = visualizar (render)
-- `Ctrl+Shift+O` = abrir pasta (workspace) · `Ctrl+B` = mostrar/esconder sidebar
-- Fechar a janela com `Ctrl+Q` (ou `Ctrl+W`)\n\n> Digite ao lado e veja este painel virar um documento.\n\n```rust\nfn main() {\n    println!(\"solta a ideia\");\n}\n```\n\n- item de tarefa\n- outro item\n\n## Diagramas Mermaid\n\n```mermaid\nflowchart LR\n    A[Abrir] --> B[Editar]\n    B --> C[Salvar]\n    B --> D[Exportar]\n```\n\n## Tabelas\n\n| Tecla | Função |\n| --- | --- |\n| `Ctrl+O` | Abrir |\n| `Ctrl+S` | Salvar |\n| `Ctrl+Shift+S` | Salvar como |\n";
+const WELCOME_PT: &str = "# Bem-vindo ao uaiType\n\nUm editor markdown **nativo** para Linux, escrito em Rust com GTK4 e libadwaita.\n\n## O que funciona\n\n- **Abrir** arquivos `.md` com `Ctrl+O`\n- **Salvar** com `Ctrl+S` e **Salvar como** com `Ctrl+Shift+S`\n- Pré-visual atualizada ao digitar\n- Tema claro/escuro seguindo o seu sistema\n- `Ctrl+1` = editar (fonte) · `Ctrl+2` = visualizar (render)\n- `Ctrl+Shift+O` = abrir pasta (workspace) · `Ctrl+B` = mostrar/esconder sidebar\n- Fechar a janela com `Ctrl+Q` (ou `Ctrl+W`)\n\n> Digite ao lado e veja este painel virar um documento.\n\n```rust\nfn main() {\n    println!(\"solta a ideia\");\n}\n```\n\n- item de tarefa\n- outro item\n\n## Diagramas Mermaid\n\n```mermaid\nflowchart LR\n    A[Abrir] --> B[Editar]\n    B --> C[Salvar]\n    B --> D[Exportar]\n```\n\n## Tabelas\n\n| Tecla | Função |\n| --- | --- |\n| `Ctrl+O` | Abrir |\n| `Ctrl+S` | Salvar |\n| `Ctrl+Shift+S` | Salvar como |\n";
+
+const WELCOME_EN: &str = "# Welcome to uaiType\n\nA **native** markdown editor for Linux, written in Rust with GTK4 and libadwaita.\n\n## What works\n\n- **Open** `.md` files with `Ctrl+O`\n- **Save** with `Ctrl+S` and **Save As** with `Ctrl+Shift+S`\n- Live-updating preview as you type\n- Light/dark theme following your system\n- `Ctrl+1` = edit (source) · `Ctrl+2` = view (render)\n- `Ctrl+Shift+O` = open folder (workspace) · `Ctrl+B` = show/hide sidebar\n- Close the window with `Ctrl+Q` (or `Ctrl+W`)\n\n> Start typing on the left and see this panel become a document.\n\n```rust\nfn main() {\n    println!(\"drop the idea\");\n}\n```\n\n- task item\n- another item\n\n## Mermaid diagrams\n\n```mermaid\nflowchart LR\n    A[Open] --> B[Edit]\n    B --> C[Save]\n    B --> D[Export]\n```\n\n## Tables\n\n| Key | Action |\n| --- | --- |\n| `Ctrl+O` | Open |\n| `Ctrl+S` | Save |\n| `Ctrl+Shift+S` | Save As |\n";
 
 fn main() -> glib::ExitCode {
     let app = adw::Application::builder()
@@ -58,7 +81,10 @@ fn build_ui(app: &libadwaita::Application) {
     header.set_title_widget(Some(&window_title));
 
     let sidebar_toggle_btn = gtk4::Button::from_icon_name("sidebar-show-symbolic");
-    sidebar_toggle_btn.set_tooltip_text(Some("Mostrar/esconder sidebar (Ctrl+B)"));
+    sidebar_toggle_btn.set_tooltip_text(Some(tr(
+        "Mostrar/esconder sidebar (Ctrl+B)",
+        "Toggle sidebar (Ctrl+B)",
+    )));
     // ---- editor ----
     let editor_buffer = sourceview::Buffer::new(None);
     editor_buffer.set_highlight_syntax(true);
@@ -83,7 +109,10 @@ fn build_ui(app: &libadwaita::Application) {
     }
 
     // status bar inferior, estilo GNOME Text Editor
-    let status_label = gtk4::Label::new(Some("0 palavras · 0 caracteres · UTF-8 · Markdown"));
+    let status_label = gtk4::Label::new(Some(tr(
+        "0 palavras · 0 caracteres · UTF-8 · Markdown",
+        "0 words · 0 chars · UTF-8 · Markdown",
+    )));
     status_label.add_css_class("dim-label");
     status_label.set_margin_top(4);
     status_label.set_margin_bottom(4);
@@ -105,31 +134,43 @@ fn build_ui(app: &libadwaita::Application) {
         toast_overlay: toast_overlay.clone(),
     });
     let open_btn = gtk4::Button::from_icon_name("document-open-symbolic");
-    open_btn.set_tooltip_text(Some("Abrir (Ctrl+O)"));
+    open_btn.set_tooltip_text(Some(tr("Abrir (Ctrl+O)", "Open (Ctrl+O)")));
     let save_btn = gtk4::Button::from_icon_name("document-save-symbolic");
-    save_btn.set_tooltip_text(Some("Salvar (Ctrl+S)"));
+    save_btn.set_tooltip_text(Some(tr("Salvar (Ctrl+S)", "Save (Ctrl+S)")));
 
     // menu primário (po-over estilo GNOME)
     let doc_section = gio::Menu::new();
-    doc_section.append(Some("Novo documento"), Some("app.new"));
-    doc_section.append(Some("Abrir…"), Some("app.open"));
-    doc_section.append(Some("Abrir pasta (workspace)…"), Some("app.open-folder"));
-    doc_section.append(Some("Salvar"), Some("app.save"));
-    doc_section.append(Some("Salvar como…"), Some("app.save-as"));
+    doc_section.append(Some(tr("Novo documento", "New document")), Some("app.new"));
+    doc_section.append(Some(tr("Abrir…", "Open…")), Some("app.open"));
+    doc_section.append(
+        Some(tr("Abrir pasta (workspace)…", "Open folder (workspace)…")),
+        Some("app.open-folder"),
+    );
+    doc_section.append(Some(tr("Salvar", "Save")), Some("app.save"));
+    doc_section.append(Some(tr("Salvar como…", "Save as…")), Some("app.save-as"));
 
     let view_section = gio::Menu::new();
-    view_section.append(Some("Fonte (editar)"), Some("app.view-editor"));
-    view_section.append(Some("Visualização (render)"), Some("app.view-preview"));
+    view_section.append(
+        Some(tr("Fonte (editar)", "Source (edit)")),
+        Some("app.view-editor"),
+    );
+    view_section.append(
+        Some(tr("Visualização (render)", "Preview (render)")),
+        Some("app.view-preview"),
+    );
 
     let appearance_section = gio::Menu::new();
-    appearance_section.append(Some("Sistema"), Some("app.appearance-system"));
-    appearance_section.append(Some("Claro"), Some("app.appearance-light"));
-    appearance_section.append(Some("Escuro"), Some("app.appearance-dark"));
+    appearance_section.append(Some(tr("Sistema", "System")), Some("app.appearance-system"));
+    appearance_section.append(Some(tr("Claro", "Light")), Some("app.appearance-light"));
+    appearance_section.append(Some(tr("Escuro", "Dark")), Some("app.appearance-dark"));
     let appearance_menu = gio::Menu::new();
-    appearance_menu.append_submenu(Some("Aparência"), &appearance_section);
+    appearance_menu.append_submenu(Some(tr("Aparência", "Appearance")), &appearance_section);
 
     let help_section = gio::Menu::new();
-    help_section.append(Some("Sobre o uaiType"), Some("app.about"));
+    help_section.append(
+        Some(tr("Sobre o uaiType", "About uaiType")),
+        Some("app.about"),
+    );
 
     let menu = gio::Menu::new();
     menu.append_section(None, &doc_section);
@@ -139,7 +180,7 @@ fn build_ui(app: &libadwaita::Application) {
 
     let menu_btn = gtk4::MenuButton::builder()
         .icon_name("open-menu-symbolic")
-        .tooltip_text("Menu")
+        .tooltip_text(tr("Menu", "Menu"))
         .menu_model(&menu)
         .build();
 
@@ -168,8 +209,8 @@ fn build_ui(app: &libadwaita::Application) {
     let indices_list = gtk4::ListBox::new();
     files_list.add_css_class("sidebar-list");
     indices_list.add_css_class("sidebar-list");
-    sidebar_stack.add_titled(&files_list, Some("files"), "Arquivos");
-    sidebar_stack.add_titled(&indices_list, Some("indices"), "Índices");
+    sidebar_stack.add_titled(&files_list, Some("files"), tr("Arquivos", "Files"));
+    sidebar_stack.add_titled(&indices_list, Some("indices"), tr("Índices", "Indices"));
 
     let switcher = gtk4::StackSwitcher::new();
     switcher.set_stack(Some(&sidebar_stack));
@@ -194,25 +235,31 @@ fn build_ui(app: &libadwaita::Application) {
 
     let new_file_btn = gtk4::Button::from_icon_name("list-add-symbolic");
     new_file_btn.add_css_class("flat");
-    new_file_btn.set_tooltip_text(Some("Novo arquivo (Ctrl+N)"));
+    new_file_btn.set_tooltip_text(Some(tr("Novo arquivo (Ctrl+N)", "New file (Ctrl+N)")));
 
     let folder_btn = gtk4::Button::new();
     folder_btn.add_css_class("flat");
     let folder_box = gtk4::Box::new(gtk4::Orientation::Horizontal, 6);
     let folder_icon = gtk4::Image::from_icon_name("folder-symbolic");
     folder_icon.set_pixel_size(16);
-    let folder_label = gtk4::Label::new(Some("Abrir pasta…"));
+    let folder_label = gtk4::Label::new(Some(tr("Abrir pasta…", "Open folder…")));
     folder_label.set_ellipsize(gtk4::pango::EllipsizeMode::End);
     folder_label.set_hexpand(true);
     folder_label.set_xalign(0.5);
     folder_box.append(&folder_icon);
     folder_box.append(&folder_label);
     folder_btn.set_child(Some(&folder_box));
-    folder_btn.set_tooltip_text(Some("Abrir pasta… (Ctrl+Shift+O)"));
+    folder_btn.set_tooltip_text(Some(tr(
+        "Abrir pasta… (Ctrl+Shift+O)",
+        "Open folder… (Ctrl+Shift+O)",
+    )));
 
     let hide_sidebar_btn = gtk4::Button::from_icon_name("window-close-symbolic");
     hide_sidebar_btn.add_css_class("flat");
-    hide_sidebar_btn.set_tooltip_text(Some("Esconder sidebar (Ctrl+B)"));
+    hide_sidebar_btn.set_tooltip_text(Some(tr(
+        "Esconder sidebar (Ctrl+B)",
+        "Hide sidebar (Ctrl+B)",
+    )));
 
     sidebar_footer.append(&new_file_btn);
     sidebar_footer.append(&folder_btn);
@@ -231,7 +278,10 @@ fn build_ui(app: &libadwaita::Application) {
             let Some(root) = root else {
                 show_toast(
                     &parts.toast_overlay,
-                    "Abra uma pasta primeiro (Ctrl+Shift+O).",
+                    tr(
+                        "Abra uma pasta primeiro (Ctrl+Shift+O).",
+                        "Open a folder first (Ctrl+Shift+O).",
+                    ),
                 );
                 return;
             };
@@ -249,12 +299,22 @@ fn build_ui(app: &libadwaita::Application) {
                     );
                     show_toast(
                         &parts.toast_overlay,
-                        &format!("Criado: {}", target.file_name().unwrap().to_string_lossy()),
+                        &format!(
+                            "{}{}",
+                            tr("Criado: ", "Created: "),
+                            target.file_name().unwrap().to_string_lossy()
+                        ),
                     );
                 }
                 Err(err) => {
                     eprintln!("uaiType: falha ao criar {}: {err}", target.display());
-                    show_toast(&parts.toast_overlay, "Não foi possível criar o arquivo.");
+                    show_toast(
+                        &parts.toast_overlay,
+                        tr(
+                            "Não foi possível criar o arquivo.",
+                            "Could not create the file.",
+                        ),
+                    );
                 }
             }
         });
@@ -317,7 +377,7 @@ fn build_ui(app: &libadwaita::Application) {
     stack.set_visible_child_name("editor");
     // NavigationSplitView: a sidebar colapsa sozinha quando a janela fica estreita
     let sidebar_page = adw::NavigationPage::builder()
-        .title("Arquivos")
+        .title(tr("Arquivos", "Files"))
         .child(&sidebar)
         .build();
     let content_page = adw::NavigationPage::builder()
@@ -596,7 +656,7 @@ fn build_ui(app: &libadwaita::Application) {
     }
 
     // ---- seed inicial + preview ao vivo ----
-    editor_buffer.set_text(WELCOME);
+    editor_buffer.set_text(if lang_is_pt() { WELCOME_PT } else { WELCOME_EN });
 
     {
         let preview_box = preview_box.clone();
@@ -649,7 +709,7 @@ fn choose_workspace_folder(
     parts: &Rc<AppParts>,
 ) {
     let dialog = gtk4::FileDialog::builder()
-        .title("Abrir pasta (workspace)")
+        .title(tr("Abrir pasta (workspace)", "Open folder (workspace)"))
         .modal(true)
         .build();
     let w = window.clone();
@@ -666,7 +726,13 @@ fn choose_workspace_folder(
             };
             let Some(path) = file.path() else {
                 eprintln!("uaiType: pasta sem path local");
-                show_toast(&parts.toast_overlay, "Não foi possível abrir essa pasta.");
+                show_toast(
+                    &parts.toast_overlay,
+                    tr(
+                        "Não foi possível abrir essa pasta.",
+                        "Could not open that folder.",
+                    ),
+                );
                 return;
             };
             *parts.state.workspace.borrow_mut() = Some(path);
@@ -678,7 +744,10 @@ fn choose_workspace_folder(
                 .clone()
                 .and_then(|p| p.file_name().map(|n| n.to_string_lossy().into_owned()))
                 .unwrap_or_else(|| "workspace".to_string());
-            show_toast(&parts.toast_overlay, &format!("Workspace: {name}"));
+            show_toast(
+                &parts.toast_overlay,
+                &format!("{}{}", tr("Workspace: ", "Workspace: "), name),
+            );
         },
     );
 }
@@ -691,7 +760,9 @@ fn update_status(status: &gtk4::Label, text: &str) {
     let words = text.split_whitespace().count();
     let chars = text.chars().count();
     status.set_label(&format!(
-        "{words} palavras · {chars} caracteres · UTF-8 · Markdown"
+        "{words} {} · {chars} {} · UTF-8 · Markdown",
+        tr("palavras", "words"),
+        tr("caracteres", "chars")
     ));
 }
 
@@ -735,11 +806,17 @@ fn open_file_direct(
             *state.current_path.borrow_mut() = Some(path);
             state.dirty.set(false);
             update_title(&window_title, &window, &state);
-            show_toast(&toast, &format!("Aberto: {name}"));
+            show_toast(&toast, &format!("{}{}", tr("Aberto: ", "Opened: "), name));
         }
         Err(err) => {
             eprintln!("uaiType: falha ao ler {}: {err}", path.display());
-            show_toast(&toast, "Não foi possível abrir o arquivo.");
+            show_toast(
+                &toast,
+                tr(
+                    "Não foi possível abrir o arquivo.",
+                    "Could not open the file.",
+                ),
+            );
         }
     }
 }
@@ -752,7 +829,7 @@ fn open_markdown(
     toast: adw::ToastOverlay,
 ) {
     let dialog = gtk4::FileDialog::builder()
-        .title("Abrir markdown")
+        .title(tr("Abrir markdown", "Open markdown"))
         .modal(true)
         .build();
     let w = window.clone();
@@ -766,7 +843,13 @@ fn open_markdown(
         };
         let Some(path) = file.path() else {
             eprintln!("uaiType: arquivo sem path local");
-            show_toast(&t, "Não foi possível abrir o arquivo.");
+            show_toast(
+                &t,
+                tr(
+                    "Não foi possível abrir o arquivo.",
+                    "Could not open the file.",
+                ),
+            );
             return;
         };
         open_file_direct(w, b, st, path, wt, t);
@@ -786,11 +869,17 @@ fn save_markdown(
             Ok(()) => {
                 state.dirty.set(false);
                 update_title(&window_title, &window, &state);
-                show_toast(&toast, "Arquivo salvo.");
+                show_toast(&toast, tr("Arquivo salvo.", "File saved."));
             }
             Err(err) => {
                 eprintln!("uaiType: falha ao salvar {}: {err}", path.display());
-                show_toast(&toast, "Não foi possível salvar o arquivo.");
+                show_toast(
+                    &toast,
+                    tr(
+                        "Não foi possível salvar o arquivo.",
+                        "Could not save the file.",
+                    ),
+                );
             }
         }
     } else {
@@ -806,7 +895,7 @@ fn save_markdown_as(
     toast: adw::ToastOverlay,
 ) {
     let dialog = gtk4::FileDialog::builder()
-        .title("Salvar como")
+        .title(tr("Salvar como", "Save as"))
         .modal(true)
         .initial_name("untitled.md")
         .build();
@@ -821,7 +910,13 @@ fn save_markdown_as(
         };
         let Some(path) = file.path() else {
             eprintln!("uaiType: arquivo sem path local");
-            show_toast(&t, "Não foi possível salvar o arquivo.");
+            show_toast(
+                &t,
+                tr(
+                    "Não foi possível salvar o arquivo.",
+                    "Could not save the file.",
+                ),
+            );
             return;
         };
         let name = path
@@ -833,11 +928,17 @@ fn save_markdown_as(
                 *st.current_path.borrow_mut() = Some(path);
                 st.dirty.set(false);
                 update_title(&wt, &w, &st);
-                show_toast(&t, &format!("Salvo como: {name}"));
+                show_toast(&t, &format!("{}{}", tr("Salvo como: ", "Saved as: "), name));
             }
             Err(err) => {
                 eprintln!("uaiType: falha ao salvar {}: {err}", path.display());
-                show_toast(&t, "Não foi possível salvar o arquivo.");
+                show_toast(
+                    &t,
+                    tr(
+                        "Não foi possível salvar o arquivo.",
+                        "Could not save the file.",
+                    ),
+                );
             }
         }
     });
@@ -852,10 +953,12 @@ fn show_about(window: &adw::ApplicationWindow) {
         .website("https://github.com/luanxis/uaitype")
         .issue_url("https://github.com/luanxis/uaitype/issues")
         .license_type(gtk4::License::MitX11)
-        .comments(
+        .comments(tr(
             "Editor markdown nativo para Linux — Rust, GTK4 e libadwaita. \
              Sem webview, sem bloat: só a fonte e a visualização.",
-        )
+            "Native Linux markdown editor — Rust, GTK4 and libadwaita. \
+             No webview, no bloat: just the source and the rendered view.",
+        ))
         .copyright("© 2026 Luan SB")
         .build();
     about.add_link("GitHub", "https://github.com/luanxis/uaitype");
@@ -873,14 +976,17 @@ fn new_document(
     if state.dirty.get() {
         let dialog = adw::MessageDialog::builder()
             .transient_for(&window)
-            .heading("Descartar alterações?")
-            .body("O documento ainda não foi salvo. Continuar vai descartar o conteúdo atual.")
+            .heading(tr("Descartar alterações?", "Discard changes?"))
+            .body(tr(
+                "O documento ainda não foi salvo. Continuar vai descartar o conteúdo atual.",
+                "The document hasn't been saved. Continuing will discard the current contents.",
+            ))
             .default_response("discard")
             .close_response("cancel")
             .modal(true)
             .build();
-        dialog.add_response("cancel", "_Cancelar");
-        dialog.add_response("discard", "_Descartar");
+        dialog.add_response("cancel", tr("_Cancelar", "_Cancel"));
+        dialog.add_response("discard", tr("_Descartar", "_Discard"));
         dialog.set_response_appearance("discard", adw::ResponseAppearance::Destructive);
         let buffer = buffer.clone();
         let window = window.clone();
@@ -896,7 +1002,7 @@ fn new_document(
                 state.dirty.set(false);
                 update_title(&window_title, &window, &state);
                 update_status(&status_label, "");
-                show_toast(&toast, "Novo documento.");
+                show_toast(&toast, tr("Novo documento.", "New document."));
             }
             dialog.close();
         });
@@ -908,7 +1014,7 @@ fn new_document(
     state.dirty.set(false);
     update_title(&window_title, &window, &state);
     update_status(&status_label, "");
-    show_toast(&toast, "Novo documento.");
+    show_toast(&toast, tr("Novo documento.", "New document."));
 }
 
 // o SourceView não segue o tema do sistema sozinho — aplica o esquema claro/escuro
@@ -1118,15 +1224,22 @@ fn refresh_workspace(
     let root = parts.state.workspace.borrow().clone();
     match &root {
         None => {
-            folder_label.set_label("Abrir pasta…");
+            folder_label.set_label(tr("Abrir pasta…", "Open folder…"));
             add_info_row(
                 files_list,
-                "Nenhuma pasta aberta. \\
+                tr(
+                    "Nenhuma pasta aberta. \\
               Clique no 📁 abaixo ou tecle Ctrl+Shift+O para escolher um vault.",
+                    "No folder is open. \\
+              Click the 📁 below or press Ctrl+Shift+O to choose a vault.",
+                ),
             );
             add_info_row(
                 indices_list,
-                "Sem workspace — os índices aparecem depois que você abrir uma pasta.",
+                tr(
+                    "Sem workspace — os índices aparecem depois que você abrir uma pasta.",
+                    "No workspace — the index lists appear after you open a folder.",
+                ),
             );
         }
         Some(root) => {
@@ -1141,8 +1254,12 @@ fn refresh_workspace(
             if rows.is_empty() {
                 add_info_row(
                     files_list,
-                    "Nenhum .md nesta pasta ainda. \\
+                    tr(
+                        "Nenhum .md nesta pasta ainda. \\
                   Pressione Ctrl+N para criar um novo documento.",
+                        "No .md files in this folder yet. \\
+                  Press Ctrl+N to create a new document.",
+                    ),
                 );
             } else {
                 for (depth, text, full_path, is_folder) in rows {
@@ -1160,7 +1277,10 @@ fn refresh_workspace(
             if indices.is_empty() {
                 add_info_row(
                     indices_list,
-                    "Nenhum .md encontrado recursivamente nesta pasta.",
+                    tr(
+                        "Nenhum .md encontrado recursivamente nesta pasta.",
+                        "No .md files found recursively in this folder.",
+                    ),
                 );
             } else {
                 for (rel, full) in indices {
@@ -1320,8 +1440,10 @@ fn render_mermaid_widget(container: &gtk4::Box, code: &str) {
     match mermaid_picture(code) {
         Ok(picture) => container.append(&picture),
         Err(err) => {
-            let label =
-                gtk4::Label::new(Some(&format!("{code}\n\n// mermaid indisponível: {err}")));
+            let label = gtk4::Label::new(Some(&format!(
+                "{code}\n\n// {}: {err}",
+                tr("mermaid indisponível", "mermaid unavailable")
+            )));
             label.add_css_class("preview-code");
             label.set_wrap(true);
             label.set_wrap_mode(gtk4::pango::WrapMode::WordChar);
